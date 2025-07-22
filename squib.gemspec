@@ -24,9 +24,12 @@ Gem::Specification.new do |spec|
   spec.rdoc_options = ['--charset=UTF-8']
   spec.extra_rdoc_files = Dir['README.md', 'samples/**/*.rb']
 
-  spec.files         = `git ls-files -z`.
-                       split("\x0").
-                       reject { |f| f.match(%r{^(spec|samples|docs|benchmarks)/}) }
+  # changed to not use git ls-files
+  spec.files         = Dir.glob("{lib,data,samples,exe}/**/*") + %w(README.md Rakefile CHANGELOG.md LICENSE.txt squib.gemspec)
+  # spec.files         = `git ls-files -z`.
+  #                      split("\x0").
+  #                      reject { |f| f.match(%r{^(spec|samples|docs|benchmarks)/}) }
+  
   spec.executables   = spec.files.grep(/^bin\//) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(/^(spec|samples|docs|benchmarks)\//)
   spec.require_paths = ['lib']
